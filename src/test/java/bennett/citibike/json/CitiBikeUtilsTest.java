@@ -23,8 +23,8 @@ class CitiBikeUtilsTest {
         Optional<Status> status = utils.findStationStatus("002", statusList);
 
         assertTrue(status.isPresent());
-        assertEquals(0, status.get().availableBikes);
-        assertEquals(15, status.get().availableSlots);
+        assertEquals(0, status.get().numBikesAvailable);
+        assertEquals(15, status.get().numDocksAvailable);
     }
 
     @Test

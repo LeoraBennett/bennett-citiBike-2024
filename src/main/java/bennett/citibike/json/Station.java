@@ -3,8 +3,8 @@ package bennett.citibike.json;
 public class Station {
     public String stationId;
     public String name;
-    public double lat; // Latitude
-    public double lon; // Longitude
+    public double lat;
+    public double lon;
 
     public Station(String stationId, String name, double lat, double lon) {
         this.stationId = stationId;

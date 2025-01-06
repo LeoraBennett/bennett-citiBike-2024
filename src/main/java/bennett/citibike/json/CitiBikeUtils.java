@@ -21,6 +21,7 @@ public class CitiBikeUtils {
         return findClosestStation(lat, lon, stations, statusList, true);
     }
 
+    // Generalized helper method for finding closest station
     private Optional<Station> findClosestStation(double lat,
                                                  double lon,
                                                  List<Station> stations,
@@ -31,16 +32,40 @@ public class CitiBikeUtils {
                     Optional<Status> stationStatus = findStationStatus(
                             station.stationId, statusList);
                     return stationStatus.isPresent()
-                            && (isBikeSearch ? stationStatus.get().availableBikes > 0 :
-                                    stationStatus.get().availableSlots > 0);
+                            && (isBikeSearch ? stationStatus.get().numBikesAvailable > 0 :
+                            stationStatus.get().numDocksAvailable > 0);
                 })
                 .min(Comparator.comparingDouble(station -> calculateDistance(lat, lon,
                         station.lat, station.lon)));
     }
 
-    public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        final int R = 6371; // Earth's radius in km
+    // Find the closest station (with available slots) to a given location
+    public Optional<Station> findClosestStationWithSlots(
+            double userLat, double userLon, List<Station> stations, List<Status> statuses) {
 
+        return stations.stream()
+                // Filter stations with available slots
+                .filter(station -> {
+                    Optional<Status> matchingStatus = findStationStatus(station.stationId, statuses);
+                    return matchingStatus.isPresent() && matchingStatus.get().numDocksAvailable > 0;
+                })
+                // Find the station with the minimum distance
+                .min(Comparator.comparingDouble(station -> calculateDistance(
+                        userLat, userLon, station.lat, station.lon)));
+    }
+
+    private static final int EARTH_RADIUS_KM = 6371; // Radius of the Earth in kilometers
+
+    /**
+     * Calculates the distance between two points specified by latitude and longitude using the Haversine formula.
+     *
+     * @param lat1 Latitude of the first point
+     * @param lon1 Longitude of the first point
+     * @param lat2 Latitude of the second point
+     * @param lon2 Longitude of the second point
+     * @return Distance in kilometers
+     */
+    public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         double latDistance = Math.toRadians(lat2 - lat1);
         double lonDistance = Math.toRadians(lon2 - lon1);
 
@@ -50,38 +75,6 @@ public class CitiBikeUtils {
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        return R * c; // Result in kilometers
+        return EARTH_RADIUS_KM * c;
     }
-
-
-    public Optional<Station> findClosestStationWithSlots(
-            double userLat, double userLon, List<Station> stations, List<Status> statuses) {
-
-        Station closestStation = null;
-        double minDistance = Double.MAX_VALUE;
-
-        for (Station station : stations) {
-            // Match station with its status
-            Status matchingStatus = statuses.stream()
-                    .filter(status -> status.stationId.equals(station.stationId))
-                    .findFirst()
-                    .orElse(null);
-
-            // Only consider stations with available slots
-            if (matchingStatus != null && matchingStatus.availableSlots > 0) {
-                // Calculate distance using Haversine formula
-                double distance = CitiBikeUtils.calculateDistance(userLat, userLon, station.lat, station.lon);
-
-                // Update closest station if distance is smaller
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestStation = station;
-                }
-            }
-        }
-
-        return Optional.ofNullable(closestStation);
-    }
-
 }
-

@@ -2,12 +2,12 @@ package bennett.citibike.json;
 
 public class Status {
     public String stationId;
-    public int availableBikes;
-    public int availableSlots;
+    public int numBikesAvailable;
+    public int numDocksAvailable;
 
-    public Status(String stationId, int availableBikes, int availableSlots) {
+    public Status(String stationId, int numBikesAvailable, int numDocksAvailable) {
         this.stationId = stationId;
-        this.availableBikes = availableBikes;
-        this.availableSlots = availableSlots;
+        this.numBikesAvailable = numBikesAvailable;
+        this.numDocksAvailable = numDocksAvailable;
     }
 }

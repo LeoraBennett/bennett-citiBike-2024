@@ -1,7 +1,13 @@
 package bennett.citibike.json;
 
+import java.util.List;
+
 public class StationResponse {
-    public Station[] stations; // Array of stations returned by the API
+    public Data data;
+
+    public static class Data {
+        public List<Station> stations; // List of stations returned by the API
+    }
 }
 
 
