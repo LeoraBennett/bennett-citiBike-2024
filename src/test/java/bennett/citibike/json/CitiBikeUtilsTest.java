@@ -23,8 +23,8 @@ class CitiBikeUtilsTest {
         Optional<Status> status = utils.findStationStatus("002", statusList);
 
         assertTrue(status.isPresent());
-        assertEquals(0, status.get().available_bikes);
-        assertEquals(15, status.get().available_slots);
+        assertEquals(0, status.get().availableBikes);
+        assertEquals(15, status.get().availableSlots);
     }
 
     @Test
@@ -50,7 +50,7 @@ class CitiBikeUtilsTest {
     }
 
     @Test
-    void fClosestStationWithSlots() {
+    void findClosestStationWithSlots() {
         List<Station> stations = Arrays.asList(
                 new Station("001", "Station A", 40.7128, -74.0060),
                 new Station("002", "Station B", 40.7138, -74.0070),

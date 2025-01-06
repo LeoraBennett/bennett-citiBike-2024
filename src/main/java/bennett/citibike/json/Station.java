@@ -1,13 +1,13 @@
 package bennett.citibike.json;
 
 public class Station {
-    public String station_id;
+    public String stationId;
     public String name;
     public double lat; // Latitude
     public double lon; // Longitude
 
-    public Station(String station_id, String name, double lat, double lon) {
-        this.station_id = station_id;
+    public Station(String stationId, String name, double lat, double lon) {
+        this.stationId = stationId;
         this.name = name;
         this.lat = lat;
         this.lon = lon;

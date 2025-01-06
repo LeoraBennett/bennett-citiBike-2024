@@ -7,10 +7,10 @@ import retrofit2.http.GET;
 
 public interface CitiBikeService {
 
-    @GET("en/station_information.json")
+    @GET("station_information.json")
     Single<StationResponse> getStationInformation();
 
-    @GET("en/station_status.json")
+    @GET("station_status.json")
     Single<StatusResponse> getStationStatus();
 }
 

@@ -8,7 +8,7 @@ public class CitiBikeServiceFactory {
 
     public CitiBikeService getService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://gbfs.citibikenyc.com/gbfs/")
+                .baseUrl("https://gbfs.citibikenyc.com/gbfs/en/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();

@@ -38,7 +38,7 @@ class CitiBikeServiceTest {
         assertNotEquals(0, statusResponse.stations.length, "Status array should not be empty.");
 
         Status firstStatus = statusResponse.stations[0];
-        assertNotEquals(0, firstStatus.available_bikes, "Available bikes should not be 0.");
-        assertNotEquals(0, firstStatus.available_slots, "Available slots should not be 0.");
+        assertNotEquals(0, firstStatus.availableBikes, "Available bikes should not be 0.");
+        assertNotEquals(0, firstStatus.availableSlots, "Available slots should not be 0.");
     }
 }
