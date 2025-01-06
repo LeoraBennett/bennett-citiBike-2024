@@ -2,8 +2,8 @@ package bennett.citibike.json;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CitiBikeServiceTest {
 
@@ -16,6 +16,7 @@ class CitiBikeServiceTest {
         StationResponse stationResponse = service.getStationInformation().blockingGet();
 
         // then
+        assertNotNull(stationResponse, "StationResponse should not be null.");
         assertNotNull(stationResponse.stations, "Stations array should not be null.");
         assertNotEquals(0, stationResponse.stations.length, "Stations array should not be empty.");
 
@@ -34,6 +35,7 @@ class CitiBikeServiceTest {
         StatusResponse statusResponse = service.getStationStatus().blockingGet();
 
         // then
+        assertNotNull(statusResponse, "StatusResponse should not be null.");
         assertNotNull(statusResponse.stations, "Status array should not be null.");
         assertNotEquals(0, statusResponse.stations.length, "Status array should not be empty.");
 

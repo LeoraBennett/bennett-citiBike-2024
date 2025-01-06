@@ -21,14 +21,6 @@ public class CitiBikeUtils {
         return findClosestStation(lat, lon, stations, statusList, true);
     }
 
-    // Find the closest station (with available slots) to a given location
-    public Optional<Station> findClosestStationWithSlots(double lat,
-                                                         double lon,
-                                                         List<Station> stations,
-                                                         List<Status> statusList) {
-        return findClosestStation(lat, lon, stations, statusList, false);
-    }
-
     private Optional<Station> findClosestStation(double lat,
                                                  double lon,
                                                  List<Station> stations,
@@ -46,16 +38,50 @@ public class CitiBikeUtils {
                         station.lat, station.lon)));
     }
 
-    // Helper to calculate distance between two points
-    private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2))
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                Math.cos(Math.toRadians(theta));
-        dist = Math.acos(dist);
-        dist = Math.toDegrees(dist);
-        dist = dist * 60 * 1.1515; // Convert to miles
-        return dist;
+    public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371; // Earth's radius in km
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // Result in kilometers
     }
+
+
+    public Optional<Station> findClosestStationWithSlots(
+            double userLat, double userLon, List<Station> stations, List<Status> statuses) {
+
+        Station closestStation = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (Station station : stations) {
+            // Match station with its status
+            Status matchingStatus = statuses.stream()
+                    .filter(status -> status.stationId.equals(station.stationId))
+                    .findFirst()
+                    .orElse(null);
+
+            // Only consider stations with available slots
+            if (matchingStatus != null && matchingStatus.availableSlots > 0) {
+                // Calculate distance using Haversine formula
+                double distance = CitiBikeUtils.calculateDistance(userLat, userLon, station.lat, station.lon);
+
+                // Update closest station if distance is smaller
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestStation = station;
+                }
+            }
+        }
+
+        return Optional.ofNullable(closestStation);
+    }
+
 }
 
