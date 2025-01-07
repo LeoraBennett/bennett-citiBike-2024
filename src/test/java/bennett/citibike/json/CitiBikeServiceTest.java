@@ -14,7 +14,6 @@ class CitiBikeServiceTest {
 
         // When
         StationResponse response = service.getStationInformation()
-                .subscribeOn(Schedulers.io())
                 .blockingGet();
 
         // Then
@@ -31,7 +30,6 @@ class CitiBikeServiceTest {
 
         // When
         StatusResponse response = service.getStationStatus()
-                .subscribeOn(Schedulers.io())
                 .blockingGet();
 
         // Then
