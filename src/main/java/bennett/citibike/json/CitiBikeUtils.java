@@ -9,7 +9,7 @@ public class CitiBikeUtils {
     // Find the status of a station given the station_id
     public Optional<Status> findStationStatus(String stationId, List<Status> statusList) {
         return statusList.stream()
-                .filter(status -> status.stationId != null && status.stationId.equals(stationId))
+                .filter(status -> status.station_id != null && status.station_id.equals(stationId))
                 .findFirst();
     }
 
@@ -30,10 +30,10 @@ public class CitiBikeUtils {
         return stations.stream()
                 .filter(station -> {
                     Optional<Status> stationStatus = findStationStatus(
-                            station.stationId, statusList);
+                            station.station_id, statusList);
                     return stationStatus.isPresent()
-                            && (isBikeSearch ? stationStatus.get().numBikesAvailable > 0 :
-                            stationStatus.get().numDocksAvailable > 0);
+                            && (isBikeSearch ? stationStatus.get().num_bikes_available > 0 :
+                            stationStatus.get().num_docks_available > 0);
                 })
                 .min(Comparator.comparingDouble(station -> calculateDistance(lat, lon,
                         station.lat, station.lon)));
@@ -46,8 +46,8 @@ public class CitiBikeUtils {
         return stations.stream()
                 // Filter stations with available slots
                 .filter(station -> {
-                    Optional<Status> matchingStatus = findStationStatus(station.stationId, statuses);
-                    return matchingStatus.isPresent() && matchingStatus.get().numDocksAvailable > 0;
+                    Optional<Status> matchingStatus = findStationStatus(station.station_id, statuses);
+                    return matchingStatus.isPresent() && matchingStatus.get().num_docks_available > 0;
                 })
                 // Find the station with the minimum distance
                 .min(Comparator.comparingDouble(station -> calculateDistance(
