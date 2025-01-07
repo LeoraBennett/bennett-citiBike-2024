@@ -3,8 +3,7 @@ package bennett.citibike.json;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CitiBikeServiceTest {
 
@@ -22,7 +21,7 @@ class CitiBikeServiceTest {
         assertNotNull(response, "StationResponse should not be null.");
         assertNotNull(response.data, "Data object should not be null.");
         assertNotNull(response.data.stations, "Stations array should not be null.");
-        assertTrue(response.data.stations.size() > 0, "Stations array should not be empty.");
+        assertFalse(response.data.stations.isEmpty(), "Stations array should not be empty.");
     }
 
     @Test
