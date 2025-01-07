@@ -9,7 +9,7 @@ public class CitiBikeUtils {
     // Find the status of a station given the station_id
     public Optional<Status> findStationStatus(String stationId, List<Status> statusList) {
         return statusList.stream()
-                .filter(status -> status.stationId.equals(stationId))
+                .filter(status -> status.stationId != null && status.stationId.equals(stationId))
                 .findFirst();
     }
 
