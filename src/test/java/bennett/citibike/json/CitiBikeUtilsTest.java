@@ -26,8 +26,8 @@ class CitiBikeUtilsTest {
 
         // Then
         assertTrue(status.isPresent());
-        assertEquals(0, status.get().numBikesAvailable);
-        assertEquals(15, status.get().numDocksAvailable);
+        assertEquals(0, status.get().num_bikes_available);
+        assertEquals(15, status.get().num_docks_available);
     }
 
     @Test

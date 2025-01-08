@@ -1,5 +1,12 @@
+buildscript {
+    dependencies {
+        classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
+    }
+}
+
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'org.example'
@@ -16,6 +23,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.11.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.11.1'
+
 }
 
 
