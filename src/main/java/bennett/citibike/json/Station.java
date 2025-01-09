@@ -14,4 +14,5 @@ public class Station {
         this.lat = lat;
         this.lon = lon;
     }
+
 }

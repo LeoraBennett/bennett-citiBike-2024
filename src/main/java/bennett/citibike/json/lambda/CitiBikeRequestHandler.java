@@ -42,8 +42,7 @@ public class CitiBikeRequestHandler implements RequestHandler
                 statusResponse.data.stations
         ).orElse(null);
 
-        CitiBikeResponse response = new CitiBikeResponse(fromLocation, toLocation,
-                startStation, endStation);
+        CitiBikeResponse response = new CitiBikeResponse(fromLocation, toLocation, startStation, endStation);
         return response;
     }
 }

@@ -18,3 +18,5 @@ public class CitiBikeResponse {
         this.end = end;
     }
 }
+
+

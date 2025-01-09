@@ -6,14 +6,12 @@ import java.util.Optional;
 
 public class CitiBikeUtils {
 
-    // Find the status of a station given the station_id
     public Optional<Status> findStationStatus(String stationId, List<Status> statusList) {
         return statusList.stream()
                 .filter(status -> status.station_id != null && status.station_id.equals(stationId))
                 .findFirst();
     }
 
-    // Find the closest station (with available bikes) to a given location
     public Optional<Station> findClosestStationWithBikes(double lat,
                                                          double lon,
                                                          List<Station> stations,
@@ -21,7 +19,6 @@ public class CitiBikeUtils {
         return findClosestStation(lat, lon, stations, statusList, true);
     }
 
-    // Generalized helper method for finding closest station
     private Optional<Station> findClosestStation(double lat,
                                                  double lon,
                                                  List<Station> stations,
@@ -39,17 +36,14 @@ public class CitiBikeUtils {
                         station.lat, station.lon)));
     }
 
-    // Find the closest station (with available slots) to a given location
     public Optional<Station> findClosestStationWithSlots(
             double userLat, double userLon, List<Station> stations, List<Status> statuses) {
 
         return stations.stream()
-                // Filter stations with available slots
                 .filter(station -> {
                     Optional<Status> matchingStatus = findStationStatus(station.station_id, statuses);
                     return matchingStatus.isPresent() && matchingStatus.get().num_docks_available > 0;
                 })
-                // Find the station with the minimum distance
                 .min(Comparator.comparingDouble(station -> calculateDistance(
                         userLat, userLon, station.lat, station.lon)));
     }
