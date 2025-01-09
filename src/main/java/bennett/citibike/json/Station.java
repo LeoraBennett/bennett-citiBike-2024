@@ -1,7 +1,5 @@
 package bennett.citibike.json;
 
-import bennett.citibike.json.lambda.Location;
-
 public class Station {
     //CHECKSTYLE:OFF
     public String station_id;

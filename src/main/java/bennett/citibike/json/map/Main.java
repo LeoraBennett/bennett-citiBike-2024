@@ -4,6 +4,13 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        new MapFrame().setVisible(true);
+        try {
+            SwingUtilities.invokeLater(() -> {
+                new MapFrame().setVisible(true);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

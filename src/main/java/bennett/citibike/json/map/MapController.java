@@ -1,6 +1,5 @@
 package bennett.citibike.json.map;
 
-import bennett.citibike.json.lambda.Location;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
@@ -34,10 +33,8 @@ public class MapController {
     }
 
     private void updateOverlay() {
-        if (!painters.isEmpty()) {
-            CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
-            mapComponent.getMapViewer().setOverlayPainter(compoundPainter);
-        }
+        CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
+        mapComponent.getMapViewer().setOverlayPainter(compoundPainter);
     }
 
     public void zoomToBestFit(Set<GeoPosition> positions, double margin) {

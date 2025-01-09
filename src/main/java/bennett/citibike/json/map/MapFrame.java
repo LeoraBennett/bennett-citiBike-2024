@@ -1,7 +1,6 @@
 package bennett.citibike.json.map;
 
 import bennett.citibike.json.Station;
-import bennett.citibike.json.StationResponse;
 import bennett.citibike.json.lambda.CitiBikeResponse;
 import bennett.citibike.json.lambda.Location;
 import org.jxmapviewer.JXMapViewer;
@@ -29,7 +28,6 @@ public class MapFrame extends JFrame {
     private JLabel startLabel;
     private JLabel endLabel;
     private JButton findRouteButton;
-
     private RoutePainter routePainter;
 
     private Set<Waypoint> waypoints;
@@ -106,16 +104,22 @@ public class MapFrame extends JFrame {
         track.add(new GeoPosition(startStation.lat, startStation.lon));
         track.add(new GeoPosition(endStation.lat, endStation.lon));
         track.add(new GeoPosition(response.to.lat, response.to.lon));
+
         this.routePainter = new RoutePainter(track);
-        mapViewer.setOverlayPainter(new CompoundPainter<>(List.of(routePainter)));
-        mapViewer.repaint();
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
+
+        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         waypoints = Set.of(
                 new DefaultWaypoint(startStation.lat, startStation.lon),
                 new DefaultWaypoint(endStation.lat, endStation.lon)
         );
         waypointPainter.setWaypoints(waypoints);
+
+        CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(List.of(routePainter, waypointPainter));
+
+        mapViewer.setOverlayPainter(compoundPainter);
+        mapViewer.repaint();
     }
+
 
     private CitiBikeResponse getCitiBikeResponse() {
         String startText = startLabel.getText();
@@ -132,12 +136,19 @@ public class MapFrame extends JFrame {
         Location startLocation = new Location(startLat, startLon);
         Location endLocation = new Location(endLat, endLon);
 
-        Station startStation = new Station("Unknown", "Start Station", startLat, startLon);
-        Station endStation = new Station("Unknown", "End Station", endLat, endLon);
+        String startStationId = "start123";
+        String startStationName = "Start Station";
+        Station startStation = new Station(startStationId, startStationName, startLat, startLon);
+
+        String endStationId = "end123";
+        String endStationName = "End Station";
+        Station endStation = new Station(endStationId, endStationName, endLat, endLon);
 
         CitiBikeResponse response = new CitiBikeResponse(startLocation, endLocation, startStation, endStation);
 
+        GeoPosition startgp = new GeoPosition(startStation.lat, startStation.lon);
+        GeoPosition endgp = new GeoPosition(endStation.lat, endStation.lon);
+
         return response;
     }
-
 }
