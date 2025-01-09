@@ -40,7 +40,8 @@ public class RoutePainter implements Painter<JXMapViewer>
         g.translate(-rect.x, -rect.y);
 
         if (antiAlias) {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); }
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        }
 
         // do the drawing
         g.setColor(Color.BLACK);

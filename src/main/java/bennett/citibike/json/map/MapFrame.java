@@ -54,11 +54,15 @@ public class MapFrame extends JFrame {
                     selectedPoints.add(clickedPosition);
 
                     if (selectedPoints.size() == 1) {
-                        startLabel.setText("Start: " + clickedPosition.getLatitude() +
-                                ", " + clickedPosition.getLongitude());
+                        startLabel.setText("Start: "
+                                + clickedPosition.getLatitude()
+                                + ", "
+                                + clickedPosition.getLongitude());
                     } else {
-                        endLabel.setText("End: " + clickedPosition.getLatitude() + ", " +
-                                "" + clickedPosition.getLongitude());
+                        endLabel.setText("End: "
+                                + clickedPosition.getLatitude()
+                                + ", "
+                                + "" + clickedPosition.getLongitude());
                     }
                 }
 
