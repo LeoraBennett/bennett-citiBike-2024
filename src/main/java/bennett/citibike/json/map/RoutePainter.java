@@ -39,8 +39,8 @@ public class RoutePainter implements Painter<JXMapViewer>
         Rectangle rect = map.getViewportBounds();
         g.translate(-rect.x, -rect.y);
 
-        if (antiAlias)
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        if (antiAlias) {
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); }
 
         // do the drawing
         g.setColor(Color.BLACK);
@@ -73,12 +73,9 @@ public class RoutePainter implements Painter<JXMapViewer>
             // convert geo-coordinate to world bitmap pixel
             Point2D pt = map.getTileFactory().geoToPixel(gp, map.getZoom());
 
-            if (first)
-            {
+            if (first) {
                 first = false;
-            }
-            else
-            {
+            } else {
                 g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
             }
 
